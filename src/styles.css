@@ -1,0 +1,64 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+h1 {
+  text-align: center;
+  padding-top: 20px;
+}
+h4 {
+  text-align: center;
+  padding-top: 10px;
+}
+
+.main {
+  background-color: rgb(207, 240, 240);
+  height: '100%';
+}
+.grid {
+  padding: 2rem;
+  background-color: rgb(207, 240, 240);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.parent-div {
+  position: relative;
+  margin-right: 0;
+  background-color: black;
+  height: 90vh;
+  width: 90vw;
+}
+
+.add-button {
+  padding: 1rem 2rem;
+  margin-left: 5.6rem;
+  font-weight: 600;
+  border-radius: 50%;
+  border: 0;
+
+  background: hsl(0, 0%, 8%);
+  color: white;
+  cursor: pointer;
+}
+
+.remove-btn {
+  margin: 5px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 30px;
+  border-radius: 10%;
+  border: none;
+  font-size: 14px;
+  opacity: 80%;
+  color: red;
+  font-weight: 600;
+}
+
+.remove-btn:hover {
+  cursor: pointer;
+}
