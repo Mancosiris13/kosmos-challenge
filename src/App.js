@@ -2,6 +2,14 @@ import React, { useRef, useState, useEffect } from 'react';
 import Moveable from 'react-moveable';
 import './styles.css';
 
+/**
+ * 
+ *  1.-This function fetch the images API, storing the data retrieved into a json,
+    2.-Gets the total numbers of objects inside the API.
+    3.-Makes a random selection of one of the object inse the API
+    4.-Finally returns the URL of the random selected object
+
+*/
 async function fetchImage() {
   const response = await fetch('https://jsonplaceholder.typicode.com/photos');
   const data = await response.json();
@@ -13,10 +21,13 @@ async function fetchImage() {
 const App = () => {
   const [moveableComponents, setMoveableComponents] = useState([]);
   const [selected, setSelected] = useState(null);
-  //
-  const addMoveable = async () => {
-    // Create a new moveable component and add it to the array
 
+  /**
+   * Create a new moveable component and add it to the array
+   * Gets the color slicing the url and substraction the color id
+   * Gives a random fit
+   */
+  const addMoveable = async () => {
     const differentFits = ['auto', 'contain', 'cover'];
 
     const url = await fetchImage();
@@ -73,6 +84,11 @@ const App = () => {
     }
   };
 
+  /**
+   *  1.- onRemove function deletes the selected component, by getting the id from the button 'Remove' when calling the function on the onClick event ,
+   *  filtering the moveableComponents by excluding the id matched.
+   *
+   */
   const onRemove = (id) => {
     const updatedMoveables = moveableComponents.filter(
       (moveable) => moveable.id !== id
@@ -112,7 +128,7 @@ const App = () => {
 export default App;
 
 /**
- *  Creacion del
+ *  Creating the Rendered component when clicking the Add Moveable button
  *
  */
 const Component = ({
@@ -146,7 +162,7 @@ const Component = ({
   let parentBounds = parent?.getBoundingClientRect();
 
   const onResize = async (e) => {
-    // ACTUALIZAR ALTO Y ANCHO
+    // Update height and width
     let newWidth = e.width;
     let newHeight = e.height;
 
@@ -167,7 +183,7 @@ const Component = ({
       fit,
     });
 
-    // ACTUALIZAR NODO REFERENCIA
+    // Update reference Node
     const beforeTranslate = e.drag.beforeTranslate;
 
     ref.current.style.width = `${e.width}px`;
@@ -187,6 +203,10 @@ const Component = ({
     });
   };
 
+  /**
+   * Updates de top and left position to the finall positions when Resize is finished
+   *
+   */
   const onResizeEnd = async (e) => {
     let newWidth = e.lastEvent?.width;
     let newHeight = e.lastEvent?.height;
@@ -198,14 +218,6 @@ const Component = ({
       newHeight = parentBounds?.height - top;
     if (positionMaxLeft > parentBounds?.width)
       newWidth = parentBounds?.width - left;
-
-    /*const { lastEvent } = e;
-    const { drag } = lastEvent;
-    const { beforeTranslate } = drag;
-
-    //const absoluteTop = top + beforeTranslate[1];
-   // const absoluteLeft = left + beforeTranslate[0];
-    */
 
     updateMoveable(
       id,
@@ -284,8 +296,9 @@ const Component = ({
 };
 
 /**
- * Crea un boton hijo del elemento creado con el Moveable metodo, solo puede existir dentro del component padre, es por eso que se renderiza nuevamente -
- * cada que se selecciona una imagen nueva, por que se pasan el Id del padre al hijo para poder removerlo de la lista de components.
+ * Creates a son button of the created element with the Moveable method, only can exist insided the parent component, that is why this button is rendered inside
+ * the parent component each time we select a different Image
+ * Calls the onRemove method and pass the prop id to the function so the function can make its filter correctly.
  */
 const Removeable = {
   name: 'removeable',
